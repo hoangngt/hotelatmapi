@@ -7,7 +7,7 @@ import ken.soapservicelib.proxy.SoapServiceProxy;
 
 public class ImplementBankService {
 	public static final String SERVICE_NAMESPACE = "http://service.sig.com/";
-	public static final String VTIO_REPOSITORY_KEY = "Db0hsr9lGsz6FaUGW7lPZcZ2VcFOMrzHZIJT2qi27p8=";
+	public static String VTIO_REPOSITORY_KEY = "Db0hsr9lGsz6FaUGW7lPZcZ2VcFOMrzHZIJT2qi27p8=";
 	public static String xsd = "http://www.w3.org/2001/XMLSchema#";
 	// private static String serverSpecificIp = "203.113.166.55";
 	private static String serverSpecificIp = "14.160.65.178";
@@ -21,7 +21,8 @@ public class ImplementBankService {
 	}
 
 	public ImplementBankService() {
-		// TODO Auto-generated constructor stub
+		soapServiceProxy = new SoapServiceProxy<ICoreService>(
+				ICoreService.class, SERVICE_NAMESPACE, getWSDLURL());
 	}
 
 	public ImplementBankService(int timeoutInMillis) {
@@ -29,6 +30,12 @@ public class ImplementBankService {
 		soapServiceProxy = new SoapServiceProxy<ICoreService>(
 				ICoreService.class, SERVICE_NAMESPACE, getWSDLURL(),
 				timeoutInMillis);
+	}
+	public ImplementBankService(String serverIp, String repositoryKey) {
+		serverSpecificIp = serverIp;
+		VTIO_REPOSITORY_KEY = repositoryKey;
+		soapServiceProxy = new SoapServiceProxy<ICoreService>(
+				ICoreService.class, SERVICE_NAMESPACE, getWSDLURL());
 	}
 
 	public FullDataInstance[] getAllBankByLocation(double lon, double lat,

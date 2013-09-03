@@ -7,7 +7,7 @@ import ken.soapservicelib.proxy.SoapServiceProxy;
 
 public class ImplementHotelService {
 	public static final String SERVICE_NAMESPACE = "http://service.sig.com/";
-	public static final String VTIO_REPOSITORY_KEY = "Db0hsr9lGsz6FaUGW7lPZcZ2VcFOMrzHZIJT2qi27p8=";
+	public static String VTIO_REPOSITORY_KEY = "Db0hsr9lGsz6FaUGW7lPZcZ2VcFOMrzHZIJT2qi27p8=";
 	public static String xsd = "http://www.w3.org/2001/XMLSchema#";
 	// private static String serverSpecificIp = "203.113.166.55";
 	private static String serverSpecificIp = "14.160.65.178";
@@ -21,7 +21,8 @@ public class ImplementHotelService {
 	}
 
 	public ImplementHotelService() {
-		// TODO Auto-generated constructor stub
+		soapServiceProxy = new SoapServiceProxy<ICoreService>(
+				ICoreService.class, SERVICE_NAMESPACE, getWSDLURL());
 	}
 
 	public ImplementHotelService(int timeoutInMillis) {
@@ -29,6 +30,12 @@ public class ImplementHotelService {
 		soapServiceProxy = new SoapServiceProxy<ICoreService>(
 				ICoreService.class, SERVICE_NAMESPACE, getWSDLURL(),
 				timeoutInMillis);
+	}
+	public ImplementHotelService(String serverIp, String repositoryKey) {
+		serverSpecificIp = serverIp;
+		VTIO_REPOSITORY_KEY = repositoryKey;
+		soapServiceProxy = new SoapServiceProxy<ICoreService>(
+				ICoreService.class, SERVICE_NAMESPACE, getWSDLURL());
 	}
 
 	public FullDataInstance[] getAllHotelByLocation(double lon, double lat,
